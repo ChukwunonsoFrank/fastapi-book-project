@@ -36,5 +36,5 @@ jobs:
     - name: Delete old Docker container
       run: sudo docker rm -f fastapi-app-container || true
     - name: Run Docker container
-      run: sudo docker run -d -p 8000:8000 --name fastapi-app-container franknonso/fastapi-app
+      run: sudo docker run -d -p 80:8000 --name fastapi-app-container franknonso/fastapi-app
 
