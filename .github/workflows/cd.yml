@@ -21,7 +21,7 @@ jobs:
     - name: Build the Docker image
       run: docker build -t fastapi-app .
     - name: Push to Docker Hub
-      run: docker push franknonso/fastapi-app:latest
+      run: docker push franknonso/fastapi-app
 
   deploy:
     if: github.event.pull_request.merged == true
@@ -30,7 +30,7 @@ jobs:
 
     steps:
     - name: Pull Docker image
-      run: sudo docker pull franknonso/fastapi-app:latest
+      run: sudo docker pull franknonso/fastapi-app
     - name: Delete old Docker container
       run: sudo docker rm -f fastapi-app-container || true
     - name: Run Docker container
