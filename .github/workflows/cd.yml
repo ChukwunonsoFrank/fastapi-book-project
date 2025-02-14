@@ -6,35 +6,14 @@ on:
     types: [closed]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v4
-    - name: Login to Docker Hub
-      env: 
-        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      
-    - name: Build the Docker image
-      run: docker build -t fastapi-app .
-    - name: Tag Docker image
-      run: docker tag fastapi-app:latest ${{secrets.DOCKER_USERNAME}}/fastapi-app:latest
-    - name: Push to Docker
-      run: docker push ${{secrets.DOCKER_USERNAME}}/fastapi-app:latest
-
   deploy:
     if: github.event.pull_request.merged == true
-
     runs-on: self-hosted
 
     steps:
-    - name: Pull Docker image
-      run: sudo docker pull franknonso/fastapi-app:latest
-    - name: Delete old Docker container
-      run: sudo docker rm -f fastapi-app-container || true
-    - name: Run Docker container
-      run: sudo docker run -d -p 8000:8000 --name fastapi-app-container franknonso/fastapi-app
-
+      - uses: actions/checkout@v4
+      - name: Build and Run Docker container
+        run: |
+          sudo docker build -t fastapi-app .
+          sudo docker rm -f fastapi-app-container || true  # Remove existing container if any
+          sudo docker run -d -p 8000:8000 --name fastapi-app-container fastapi-app
