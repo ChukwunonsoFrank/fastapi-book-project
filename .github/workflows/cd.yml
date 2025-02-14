@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Build and Run Docker container
+      - name: Build and Run Docker container on self-hosted machine
         run: |
           sudo docker build -t fastapi-app .
           sudo docker rm -f fastapi-app-container || true  # Remove existing container if any
