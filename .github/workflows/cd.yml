@@ -14,6 +14,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build and Run Docker container
         run: |
-          sudo docker build -t fastapi-app .
-          sudo docker rm -f fastapi-app-container || true
-          sudo docker run -d -p 8000:8000 --name fastapi-app-container fastapi-app
+          docker build -t fastapi-app .
+          docker rm -f fastapi-app-container || true
+          docker run -d -p 8000:8000 --name fastapi-app-container fastapi-app
